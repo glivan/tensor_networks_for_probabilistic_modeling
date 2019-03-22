@@ -16,7 +16,7 @@ from tensornetworks.ComplexMPSSquare import ComplexMPSSquare
 from tensornetworks.RealMPDO import RealMPDO
 from tensornetworks.ComplexMPDO import ComplexMPDO
 
-def init(datasetload_init='biofam',batch_size_init='20',learning_rate_init='1.',
+def init(datasetload_init='lymphography',batch_size_init='20',learning_rate_init='1.',
          bond_dimension_init='2',n_iter_init='10',ansatz_init='squarecomplex',
          seed_init=None,save_init=False):
     """Initialize parameters :
