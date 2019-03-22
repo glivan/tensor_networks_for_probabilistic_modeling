@@ -10,11 +10,11 @@ import os.path
 import sys
 import pickle
 import time
-from PositiveMPS import PositiveMPS
-from RealMPSSquare import RealMPSSquare
-from ComplexMPSSquare import ComplexMPSSquare
-from RealMPDO import RealMPDO
-from ComplexMPDO import ComplexMPDO
+from tensornetworks.PositiveMPS import PositiveMPS
+from tensornetworks.RealMPSSquare import RealMPSSquare
+from tensornetworks.ComplexMPSSquare import ComplexMPSSquare
+from tensornetworks.RealMPDO import RealMPDO
+from tensornetworks.ComplexMPDO import ComplexMPDO
 
 def init(datasetload_init='biofam',batch_size_init='20',learning_rate_init='1.',
          bond_dimension_init='2',n_iter_init='10',ansatz_init='squarecomplex',
@@ -56,7 +56,7 @@ def run():
     if os.path.isdir('/ptmp/mpq/iglasser/unsupervised'):
         path='/ptmp/mpq/iglasser/unsupervised/'
     else:
-        path=''
+        path='datasets/'
     with open(path+datasetload, 'rb') as f:
         a=pickle.load(f)
     X=a[0]
@@ -72,7 +72,7 @@ def run():
                             n_iter, verbose=False, random_state=rng) 
     elif ansatz=="squarecomplex":
         mps = ComplexMPSSquare(bond_dimension, learning_rate, batch_size, 
-                               n_iter, verbose=True, random_state=rng) 
+                               n_iter, verbose=False, random_state=rng) 
     elif ansatz=="realMPDO":
         mps = RealMPDO(bond_dimension, learning_rate, batch_size, 
                        n_iter, verbose=False, random_state=rng, mu=2)
