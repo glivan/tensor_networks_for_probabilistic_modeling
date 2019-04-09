@@ -4,7 +4,7 @@ Created on Thu Dec 13 15:52:54 2018
 
 @author: Ivan
 """
-from MPSClass import MPS
+from .MPSClass import MPS
 import numpy as np
 
 class PositiveMPS(MPS):
