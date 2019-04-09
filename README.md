@@ -40,11 +40,11 @@ Input parameters (all parameters are optional):
 - learning_rate : float [default: 1.0], learning rate for gradient descent
 - bond_dimension : int [default: 2], bond dimension/rank of the tensor networks
 - n_iter : int [default: 10], number of epochs over the training dataset to perform
-- ansatz : str [default: squarecomplex], choice of tensor network ansatz, between 'positive', 'squarereal', 'squarecomplex', 'realLPS', 'complexLPS' (
+- ansatz : str [default: squarecomplex], choice of tensor network ansatz, between 'positive', 'squarereal', 'squarecomplex', 'realLPS', 'complexLPS'
 - seed : int [default: None], choice of integer seed for random number generation
 - save : int [default: 0], if equal to 1, save the optimized tensor network to disk
 
-Experiments in the paper used following parameters:
+Experiments in the paper used the following parameters:
 - batch size was set to 20
 - learning_rate was chosen using a grid search on powers of 10 going from 10<sup>-5</sup> to 10<sup>5</sup>.
 - n_iter was set to a maximum of 20000
