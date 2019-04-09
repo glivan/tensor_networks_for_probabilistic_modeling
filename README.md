@@ -51,6 +51,7 @@ Experiments in the paper used the following parameters:
 - batch size was set to 20
 - learning_rate was chosen using a grid search on powers of 10 going from 10<sup>-5</sup> to 10<sup>5</sup>.
 - n_iter was set to a maximum of 20000
+Each data point indicated in the paper is the lowest negative log-likelihood obtained from 10 trials with different initial tensors.
 
 We also include code to train a Hidden Markov Model corresponding to an MPS with positive tensors. The training is performed using the Baum-Welch algorithm by running
 ```
