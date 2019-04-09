@@ -73,10 +73,10 @@ def run():
     elif ansatz=="squarecomplex":
         mps = ComplexMPSSquare(bond_dimension, learning_rate, batch_size, 
                                n_iter, verbose=False, random_state=rng) 
-    elif ansatz=="realMPDO":
+    elif ansatz=="realLPS":
         mps = RealLPS(bond_dimension, learning_rate, batch_size, 
                        n_iter, verbose=False, random_state=rng, mu=2)
-    elif ansatz=="complexMPDO":
+    elif ansatz=="complexLPS":
         mps = ComplexLPS(bond_dimension, learning_rate, batch_size, 
                           n_iter, verbose=False, random_state=rng, mu=2)
     else:
