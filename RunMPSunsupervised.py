@@ -13,8 +13,8 @@ import time
 from tensornetworks.PositiveMPS import PositiveMPS
 from tensornetworks.RealMPSSquare import RealMPSSquare
 from tensornetworks.ComplexMPSSquare import ComplexMPSSquare
-from tensornetworks.RealMPDO import RealMPDO
-from tensornetworks.ComplexMPDO import ComplexMPDO
+from tensornetworks.RealLPS import RealLPS
+from tensornetworks.ComplexLPS import ComplexLPS
 
 def init(datasetload_init='lymphography',batch_size_init='20',learning_rate_init='1.',
          bond_dimension_init='2',n_iter_init='10',ansatz_init='squarecomplex',
@@ -74,12 +74,13 @@ def run():
         mps = ComplexMPSSquare(bond_dimension, learning_rate, batch_size, 
                                n_iter, verbose=False, random_state=rng) 
     elif ansatz=="realMPDO":
-        mps = RealMPDO(bond_dimension, learning_rate, batch_size, 
+        mps = RealLPS(bond_dimension, learning_rate, batch_size, 
                        n_iter, verbose=False, random_state=rng, mu=2)
     elif ansatz=="complexMPDO":
-        mps = ComplexMPDO(bond_dimension, learning_rate, batch_size, 
+        mps = ComplexLPS(bond_dimension, learning_rate, batch_size, 
                           n_iter, verbose=False, random_state=rng, mu=2)
-
+    else:
+        print('Ansatz choice not valid')
     
     #train MPS
     begin = time.time()  
