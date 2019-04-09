@@ -12,16 +12,16 @@ numpy, scikit-learn, os, sys, pickle, time
 The preprocesssed datasets are included in the `datasets/` folder. 
 Preprocessing transformed the categorical data into a numpy array of integers. Each row corresponds to a training example and each column is an integer feature between 0 and d-1, where d is the number of different categories. As this work is only concerned with the expressivity of different functions, only training sets are included.
 
-Included datasets :
-From the R package TraMineR :
+Included datasets :  
+From the R package TraMineR :  
 - Family life states from the Swiss Household Panel biographical survey : `biofam` [1]
 
-From the UCI Machine Learning Repository [2]
-SPECT Heart Data Set : `spect`
-Lymphography Data Set : `lymphography` [3]
-Primary Tumor Data Set : `tumor` [4]
-Congressional Voting Records Data Set : `votes`
-Solar Flare Data Set : `flare`
+From the UCI Machine Learning Repository [2]  
+- SPECT Heart Data Set : `spect`
+- Lymphography Data Set : `lymphography` [3]
+- Primary Tumor Data Set : `tumor` [4]
+- Congressional Voting Records Data Set : `votes`
+- Solar Flare Data Set : `flare`
 
 ### Tensor networks
 The `tensornetworks/` folder includes a generic tensor network class `MPSClass.py` as well as classes for positive MPS, Born machine MPS and Locally Purified States (LPS) with real or complex tensor elements. These classes include simple methods for performing maximum likelihood estimation on a dataset using batch gradient descent. The training is done by computing the gradients of the log-likelihood over all tensors for each batch of training example and then updating all tensors at once in a gradient descent optimization scheme. This is different from a DMRG-like algorithm where only one (or two) tensor is updated at a time. For this reason canonical forms (that would be different for each class of tensor network) are not used. Note that the code is not optimized for speed, but rather for simplicity and being easily understandable.
@@ -46,16 +46,13 @@ Input parameters (all parameters are optional):
 
 Experiments in the paper used following parameters:
 - batch size was set to 20
-- learning_rate was chosen using a grid search on powers of 10 going from 10^-5 to 10^5.
+- learning_rate was chosen using a grid search on powers of 10 going from 10<sup>-5</sup> to 10<sup>5</sup>.
 - n_iter was set to a maximum of 20000
 
 
 Datasets bibliography:
 
-[1] Müller, N. S., M. Studer, G. Ritschard (2007). Classification de parcours de vie à l'aide de l'optimal matching. In XIVe Rencontre de la Société francophone de classification (SFC 2007), Paris, 5 - 7 septembre 2007, pp. 157–160. 
-
-[2] Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.
-
-[3] This lymphography domain was obtained from the University Medical Centre, Institute of Oncology, Ljubljana, Yugoslavia. Thanks go to M. Zwitter and M. Soklic for providing the data.
-
+[1] Müller, N. S., M. Studer, G. Ritschard (2007). Classification de parcours de vie à l'aide de l'optimal matching. In XIVe Rencontre de la Société francophone de classification (SFC 2007), Paris, 5 - 7 septembre 2007, pp. 157–160.  
+[2] Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.  
+[3] This lymphography domain was obtained from the University Medical Centre, Institute of Oncology, Ljubljana, Yugoslavia. Thanks go to M. Zwitter and M. Soklic for providing the data.  
 [4] This primary tumor domain was obtained from the University Medical Centre, Institute of Oncology, Ljubljana, Yugoslavia. Thanks go to M. Zwitter and M. Soklic for providing the data.
