@@ -2,14 +2,14 @@
 This is the code accompanying the paper "Probabilistic modelling with tensor networks, hidden Markov models and quantum circuits" and allowing to reproduce its numerical results.
 
 ## Prerequisite
-The following python libraries are required to run the code:
+A working python 2.7 or 3.7 installation with the following python libraries :
 ```
 numpy, scikit-learn, os, sys, pickle, time
 ```
 
 ## Overview of the code
 ### Datasets
-The preprocesssed datasets are included in the `datasets/` folder. 
+The preprocesssed datasets are included in the `datasets` folder. 
 Preprocessing transformed the categorical data into a numpy array of integers. Each row corresponds to a training example and each column is an integer feature between 0 and d-1, where d is the number of different categories. As this work is only concerned with the expressivity of different functions, only training sets are included.
 
 Included datasets :  
@@ -24,7 +24,7 @@ From the UCI Machine Learning Repository [2]
 - Solar Flare Data Set : `flare`
 
 ### Tensor networks
-The `tensornetworks/` folder includes a generic tensor network class `MPSClass.py` as well as classes for positive MPS, Born machine MPS and Locally Purified States (LPS) with real or complex tensor elements. These classes include simple methods for performing maximum likelihood estimation on a dataset using batch gradient descent. The training is done by computing the gradients of the log-likelihood over all tensors for each batch of training example and then updating all tensors at once in a gradient descent optimization scheme. This is different from a DMRG-like algorithm where only one (or two) tensor is updated at a time. For this reason canonical forms (that would be different for each class of tensor network) are not used. Note that the code is not optimized for speed, but rather for simplicity and being easily understandable.
+The `tensornetworks` folder includes a generic tensor network class `MPSClass.py` as well as classes for positive MPS, Born machine MPS and Locally Purified States (LPS) with real or complex tensor elements. These classes include simple methods for performing maximum likelihood estimation on a dataset using batch gradient descent. The training is done by computing the gradients of the log-likelihood over all tensors for each batch of training example and then updating all tensors at once in a gradient descent optimization scheme. This is different from a DMRG-like algorithm where only one (or two) tensor is updated at a time. For this reason canonical forms (that would be different for each class of tensor network) are not used. Note that the code is not optimized for speed, but rather for simplicity and being easily understandable.
 
 ## Running the code
 We provide a jupyter notebook `RunMPSunsupervised.py` that explains how to create a model, load a dataset and train the model on the dataset, as well as a python script `RunMPSunsupervised.py` to run maximum likelihood estimation with all parameters from command line.
