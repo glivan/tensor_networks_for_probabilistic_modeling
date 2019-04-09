@@ -27,7 +27,7 @@ From the UCI Machine Learning Repository [2]
 The `tensornetworks` folder includes a generic tensor network class `MPSClass.py` as well as classes for positive MPS, Born machine MPS and Locally Purified States (LPS) with real or complex tensor elements. These classes include simple methods for performing maximum likelihood estimation on a dataset using batch gradient descent. The training is done by computing the gradients of the log-likelihood over all tensors for each batch of training example and then updating all tensors at once in a gradient descent optimization scheme. This is different from a DMRG-like algorithm where only one (or two) tensor is updated at a time. For this reason canonical forms (that would be different for each class of tensor network) are not used. Note that the code is not optimized for speed, but rather for simplicity and being easily understandable.
 
 ## Running the code
-We provide a jupyter notebook `RunMPSunsupervised.py` that explains how to create a model, load a dataset and train the model on the dataset, as well as a python script `RunMPSunsupervised.py` to run maximum likelihood estimation with all parameters from command line.
+We provide a jupyter notebook `MPStutorial.ipynb` that explains how to create a model, load a dataset and train the model on the dataset, as well as a python script `RunMPSunsupervised.py` to run maximum likelihood estimation with all parameters from command line.
 
 Run Maximum Likelihood Estimation with a tensor network on a dataset:
 ```
