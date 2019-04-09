@@ -249,9 +249,9 @@ class MPS():
             
             if self.verbose:
                 train_likelihood=self.likelihood(X)
-                print("[%s] Iteration %d, likelihood = %.3f,"
+                print("Iteration %d, likelihood = %.3f,"
                   " time = %.2fs"
-                  % (type(self).__name__, iteration,train_likelihood,
+                  % (iteration,train_likelihood,
                      end - begin))
                 self.history.append(train_likelihood)
             begin = end
