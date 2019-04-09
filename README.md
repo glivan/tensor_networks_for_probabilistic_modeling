@@ -2,7 +2,7 @@
 This is the code accompanying the paper "Probabilistic modelling with tensor networks, hidden Markov models and quantum circuits" and allowing to reproduce its numerical results.
 
 ## Prerequisite
-The following python libraries (all included in Anaconda) are required to run the code:
+The following python libraries are required to run the code:
 ```
 numpy, scikit-learn, os, sys, pickle, time
 ```
@@ -26,11 +26,10 @@ From the UCI Machine Learning Repository [2]
 ### Tensor networks
 The `tensornetworks/` folder includes a generic tensor network class `MPSClass.py` as well as classes for positive MPS, Born machine MPS and Locally Purified States (LPS) with real or complex tensor elements. These classes include simple methods for performing maximum likelihood estimation on a dataset using batch gradient descent. The training is done by computing the gradients of the log-likelihood over all tensors for each batch of training example and then updating all tensors at once in a gradient descent optimization scheme. This is different from a DMRG-like algorithm where only one (or two) tensor is updated at a time. For this reason canonical forms (that would be different for each class of tensor network) are not used. Note that the code is not optimized for speed, but rather for simplicity and being easily understandable.
 
-### Examples
-The `examples/` folder includes a jupyter notebook explaining how to create a model and train it, as well as a python script `RunMPSunsupervised.py` to run maximum likelihood estimation with all parameters from command line.
-
 ## Running the code
-`RunMPSunsupervised` -- Run Maximum Likelihood Estimation with a tensor network on a dataset. Run as 
+We provide a jupyter notebook `RunMPSunsupervised.py` that explains how to create a model, load a dataset and train the model on the dataset, as well as a python script `RunMPSunsupervised.py` to run maximum likelihood estimation with all parameters from command line.
+
+Run Maximum Likelihood Estimation with a tensor network on a dataset:
 ```
 python RunMPSunsupervised.py lymphography 20 1.0 2 10 squarecomplex
 ```
