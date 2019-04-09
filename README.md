@@ -2,7 +2,7 @@
 This is the code accompanying the paper "Probabilistic modelling with tensor networks, hidden Markov models and quantum circuits" and allowing to reproduce its numerical results.
 
 ## Prerequisite
-A working python 2.7 or 3.7 installation with the following python libraries (all included in Anaconda) :
+A working python 2.7, 3.4 or more recent installation with the following python libraries (all included in Anaconda) :
 ```
 numpy, scikit-learn, os, sys, pickle, time
 ```
