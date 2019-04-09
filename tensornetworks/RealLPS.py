@@ -7,6 +7,7 @@ Created on Thu Dec 13 15:52:54 2018
 
 from .MPSClass import MPS
 import numpy as np
+from sklearn.externals.six.moves import xrange
 
 
 class RealLPS(MPS):
