@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Dec 13 15:52:54 2018
-
-@author: Ivan
-"""
 
 import numpy as np
 import os.path
@@ -11,8 +6,8 @@ import sys
 import pickle
 import time
 from tensornetworks.PositiveMPS import PositiveMPS
-from tensornetworks.RealMPSSquare import RealMPSSquare
-from tensornetworks.ComplexMPSSquare import ComplexMPSSquare
+from tensornetworks.RealBorn import RealBorn
+from tensornetworks.ComplexBorn import ComplexBorn
 from tensornetworks.RealLPS import RealLPS
 from tensornetworks.ComplexLPS import ComplexLPS
 
@@ -68,10 +63,10 @@ def run():
         mps = PositiveMPS(bond_dimension, learning_rate, batch_size, 
                           n_iter, verbose=False, random_state=rng) 
     elif ansatz=="squarereal":
-        mps = RealMPSSquare(bond_dimension, learning_rate, batch_size, 
+        mps = RealBorn(bond_dimension, learning_rate, batch_size, 
                             n_iter, verbose=False, random_state=rng) 
     elif ansatz=="squarecomplex":
-        mps = ComplexMPSSquare(bond_dimension, learning_rate, batch_size, 
+        mps = ComplexBorn(bond_dimension, learning_rate, batch_size, 
                                n_iter, verbose=False, random_state=rng) 
     elif ansatz=="realLPS":
         mps = RealLPS(bond_dimension, learning_rate, batch_size, 

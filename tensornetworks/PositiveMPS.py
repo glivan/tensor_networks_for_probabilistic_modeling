@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Dec 13 15:52:54 2018
 
-@author: Ivan
-"""
 from .MPSClass import MPS
 import numpy as np
 from sklearn.externals.six.moves import xrange

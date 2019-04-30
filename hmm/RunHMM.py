@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Dec 13 15:52:54 2018
-
-@author: Ivan
-"""
 
 import numpy as np
 import os.path
@@ -65,6 +60,7 @@ def run():
     model.bake()
 
     # Train HMM
+    begin = time.time()  
     sequencetrain=[[str(i) for i in v] for v in X]
     np.random.seed()
     model.fit(sequencetrain,algorithm='baum-welch',stop_threshold=1e-50,min_iterations=1000,\
@@ -74,9 +70,6 @@ def run():
     for i in sequencetrain:
         u+=model.log_probability(i)
     accuracy=-u/len(sequencetrain)
-    
-    #train HMM
-    begin = time.time()  
 
     time_elapsed = time.time()-begin
     
