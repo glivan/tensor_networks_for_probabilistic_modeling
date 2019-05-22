@@ -1,5 +1,5 @@
-# Probabilistic modelling with tensor networks
-This is the code accompanying the paper "Probabilistic modelling with tensor networks, hidden Markov models and quantum circuits" and allowing to reproduce its numerical results.
+# Expressive power of tensor-network factorizations for probabilistic modelling
+This is the code accompanying the paper "Expressive power of tensor-network factorizations for probabilistic modelling" and allowing to reproduce its numerical results.
 
 ## Prerequisite
 A working python 2.7, 3.4 or more recent installation with the following python libraries (all included in Anaconda) :
