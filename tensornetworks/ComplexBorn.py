@@ -188,6 +188,16 @@ class ComplexBorn(MPS):
         """
         self.w=np.asarray(rng.normal(0, 1, self.m_parameters))\
                 +1j*np.asarray(rng.normal(0, 1, self.m_parameters))
+
+    def _weightinitialization2(self,rng):
+        """Initialize weights w randomly
+        Parameters
+        ----------
+        rng : random number generation
+        """
+        self.m_parameters2=(self.n_features-2)*self.d*self.D*self.D+2*self.D*self.d
+        return np.asarray(rng.normal(0, 1, self.m_parameters2))\
+                +1j*np.asarray(rng.normal(0, 1, self.m_parameters2))
         
     def _likelihood_derivative(self, v):
         """Compute derivative of log-likelihood of configurations in v

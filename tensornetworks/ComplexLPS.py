@@ -211,7 +211,32 @@ class ComplexLPS(MPS):
         self.m_parameters = self.n_features*self.d*self.D*self.D*self.mu
         self.w=np.asarray(rng.normal(0, 1, self.m_parameters))\
                 +1j*np.asarray(rng.normal(0, 1, self.m_parameters))
-        
+ 
+    def _weightinitialization2(self,rng):
+        """Initialize weights w randomly
+        Parameters
+        ----------
+        rng : random number generation
+        """
+        self.m_parameters2 = (self.n_features-2)*self.d*self.D*self.D*self.mu+self.d*self.D*self.mu*2
+        return np.asarray(rng.normal(0, 1, self.m_parameters2))\
+                +1j*np.asarray(rng.normal(0, 1, self.m_parameters2))
+
+    def padding_function(self, w):
+        new_w=np.zeros((self.n_features,self.d,self.D,self.D,self.mu),dtype=w.dtype)
+        new_w[0,:,0,:,:]=w[0:self.D*self.d*self.mu].reshape(self.d,self.D,self.mu)
+        new_w[1:self.n_features-1,:,:,:,:]=w[self.D*self.d*self.mu*2:].reshape((self.n_features-2,self.d,self.D,self.D,self.mu))
+        new_w[self.n_features-1,:,:,0,:]=w[self.D*self.d*self.mu:self.D*self.d*self.mu*2].reshape(self.d,self.D,self.mu)
+        return new_w.reshape(self.m_parameters)
+
+    def unpadding_function(self, w):
+        w=w.reshape((self.n_features,self.d,self.D,self.D,self.mu))
+        new_w=np.zeros(self.m_parameters2,dtype=w.dtype)
+        new_w[0:self.D*self.d*self.mu]=w[0,:,0,:,:].reshape(self.d*self.D*self.mu)
+        new_w[self.D*self.d*self.mu:self.D*self.d*self.mu*2]=w[self.n_features-1,:,:,0,:].reshape(self.d*self.D*self.mu)
+        new_w[self.D*self.d*self.mu*2:]=w[1:self.n_features-1,:,:,:,:].reshape((self.n_features-2)*self.d*self.D*self.D*self.mu)
+        return new_w
+                
     def _likelihood_derivative(self, v):
         """Compute derivative of log-likelihood of configurations in v
         Parameters

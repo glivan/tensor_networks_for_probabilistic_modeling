@@ -56,7 +56,8 @@ def run():
         a=pickle.load(f)
     X=a[0]
     X=X.astype(int)
-    
+    X_test=a[1]
+    X_test=X_test.astype(int)    
 
     #define MPS
     if ansatz=="positive":
@@ -81,18 +82,20 @@ def run():
     begin = time.time()  
     mps.fit(X)
     accuracy=mps.likelihood(X)
+    accuracy_test=mps.likelihood(X_test)
     time_elapsed = time.time()-begin
     
     print("Negative log likelihood = %.3f" % (accuracy))
+    print("Negative log likelihood test = %.3f" % (accuracy_test))
     print("Time elapsed = %.2fs" %(time_elapsed))
 
     if save:
         name='mpsresult'+'_'+str(datasetload)+'_'+str(ansatz)+'_'+\
             str(batch_size)+'_'+str(learning_rate)+'_'+\
-            str(bond_dimension)+'_'+str(n_iter)+'_'+str(accuracy)
+            str(bond_dimension)+'_'+str(n_iter)+'_'+str(accuracy)+'_'+str(accuracy_test)
         with open(path+name, 'wb') as f:
-            pickle.dump([datasetload, ansatz, bond_dimension, learning_rate, batch_size, 
-                          n_iter, accuracy], f)
+            pickle.dump([mps, datasetload, ansatz, bond_dimension, learning_rate, batch_size, 
+                          n_iter, accuracy, accuracy_test], f)
 
 if __name__ == '__main__':
     # Main program : initialize with options from command line and run
