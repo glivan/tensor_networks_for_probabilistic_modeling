@@ -368,7 +368,7 @@ class MPS():
         initial_value=self._weightinitialization2(rng)
 
         res=minimize(fun=distancepartial,jac=derivativedistancepartial,x0=initial_value.view(np.float64),\
-                     method='BFGS',options={'maxiter': self.n_iter},tol=10**(-16))
+                     method='L-BFGS-B',options={'maxiter': self.n_iter},tol=10**(-16))
 
 
         self.w=self.padding_function(res.x.view(self.w.dtype))
