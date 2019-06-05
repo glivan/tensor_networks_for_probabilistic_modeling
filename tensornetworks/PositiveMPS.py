@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from .MPSClass import MPS
+from .MPSClass import TN
 import numpy as np
 from sklearn.externals.six.moves import xrange
 
-class PositiveMPS(MPS):
+class PositiveMPS(TN):
     """Matrix Product States with non-negative parameters
     Parametrization using the square of real parameters.
     Parameters
@@ -27,7 +27,7 @@ class PositiveMPS(MPS):
     ----------
     Attributes
     ----------
-    w : numpy array, shape (n_parameters)
+    w : numpy array, shape (m_parameters)
         Parameters of the tensor network
     norm : float
         normalization constant for the probability distribution
@@ -90,7 +90,7 @@ class PositiveMPS(MPS):
             One configuration
         Returns
         -------
-        derivative : numpy array, shape (n_parameters,)
+        derivative : numpy array, shape (m_parameters,)
         """
         w2 = np.reshape(self.w,(self.n_features,self.d,self.D,self.D))
         derivative = np.zeros((self.n_features,self.d,self.D,self.D))
@@ -128,7 +128,7 @@ class PositiveMPS(MPS):
         """Compute the derivative of the norm
         Returns
         -------
-        derivative : numpy array, shape (n_parameters,)
+        derivative : numpy array, shape (m_parameters,)
         """
         w2 = np.reshape(self.w,(self.n_features,self.d,self.D,self.D))
         derivative = np.zeros((self.n_features,self.d,self.D,self.D)) 

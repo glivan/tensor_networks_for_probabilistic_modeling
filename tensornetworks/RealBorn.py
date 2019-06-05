@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from .MPSClass import MPS
+from .MPSClass import TN
 import numpy as np
 from sklearn.externals.six.moves import xrange
 
-class RealBorn(MPS):
+class RealBorn(TN):
     """Born machine with real parameters
     Probability is the square of the MPS
     Parameters
@@ -27,7 +27,7 @@ class RealBorn(MPS):
     ----------
     Attributes
     ----------
-    w : numpy array, shape (n_parameters)
+    w : numpy array, shape (m_parameters)
         Parameters of the tensor network
     norm : float
         normalization constant for the probability distribution
@@ -93,7 +93,7 @@ class RealBorn(MPS):
             One configuration
         Returns
         -------
-        derivative : numpy array, shape (n_parameters,)
+        derivative : numpy array, shape (m_parameters,)
         """
         w2 = np.reshape(self.w,(self.n_features,self.d,self.D,self.D))
         derivative = np.zeros((self.n_features,self.d,self.D,self.D))
@@ -131,7 +131,7 @@ class RealBorn(MPS):
         """Compute the derivative of the norm
         Returns
         -------
-        derivative : numpy array, shape (n_parameters,)
+        derivative : numpy array, shape (m_parameters,)
         """        
         w2=np.reshape(self.w,(self.n_features,self.d,self.D,self.D))
         derivative=np.zeros((self.n_features,self.d,self.D,self.D)) 

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 
-from .MPSClass import MPS
+from .MPSClass import TN
 import numpy as np
 from sklearn.externals.six.moves import xrange
 
 
-class ComplexBorn(MPS):
+class ComplexBorn(TN):
     """Born machine with complex parameters
     Probability is the absolute value squared of the MPS
     Parameters
@@ -29,7 +29,7 @@ class ComplexBorn(MPS):
     ----------
     Attributes
     ----------
-    w : numpy array, shape (n_parameters)
+    w : numpy array, shape (m_parameters)
         Parameters of the tensor network
     norm : float
         normalization constant for the probability distribution
@@ -97,7 +97,7 @@ class ComplexBorn(MPS):
             One configuration
         Returns
         -------
-        derivative : numpy array, shape (n_parameters,)
+        derivative : numpy array, shape (m_parameters,)
         """
         w2=np.reshape(self.w,(self.n_features,self.d,self.D,self.D))
         derivative=np.zeros((self.n_features,self.d,self.D,self.D),dtype=np.complex128)
@@ -136,7 +136,7 @@ class ComplexBorn(MPS):
         """Compute the derivative of the norm
         Returns
         -------
-        derivative : numpy array, shape (n_parameters,)
+        derivative : numpy array, shape (m_parameters,)
         """        
         
         w2=np.reshape(self.w,(self.n_features,self.d,self.D,self.D))
@@ -207,7 +207,7 @@ class ComplexBorn(MPS):
             Configurations
         Returns
         -------
-        update_w : numpy array, shape (n_parameters,)
+        update_w : numpy array, shape (m_parameters,)
             array of derivatives of the log-likelihood
         """
         update_w=np.zeros(self.m_parameters,dtype=np.complex128)

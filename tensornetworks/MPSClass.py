@@ -9,13 +9,13 @@ from functools import partial
 from scipy.optimize import minimize
 import itertools
 
-class MPS():
-    """Generic Tensor Network Class for Matrix Product States
+class TN():
+    """Generic Tensor Network Class.
     This class should not be used directly. Use derived classes instead.
     Parameters
     ----------
     D : int, optional
-        Rank/Bond dimension of the MPS
+        Rank/Bond dimension of the tensor network
     learning_rate : float, optional
         Learning rate of the gradient descent algorithm
     batch_size : int, optional
@@ -25,15 +25,14 @@ class MPS():
         during training.
     random_state : integer or numpy.RandomState, optional
         A random number generator instance to define the state of the
-        random permutations generator and of the initial parameters.
-        If an integer is given, it fixes the
+        random permutations generator. If an integer is given, it fixes the
         seed. Defaults to the global numpy random number generator.
     verbose : int, optional
         The verbosity level. The default, zero, means silent mode.
     ----------
     Attributes
     ----------
-    w : numpy array, shape (n_parameters)
+    w : numpy array, shape (m_parameters)
         Parameters of the tensor network
     norm : float
         normalization constant for the probability distribution
@@ -42,7 +41,7 @@ class MPS():
     n_features : int
         number of features in the dataset
     d : int
-        physical dimension (dimension of the features)
+        physical dimension (dimension of the categorical features)
     m_parameters : int
         number of parameters in the network
     history : list
@@ -79,43 +78,43 @@ class MPS():
         pass
     
     def _derivative(self, x): 
-        """Compute the derivative of P(x)
+        """Compute the derivatives of P(x)
         Parameters
         ----------
         x : numpy array, shape (n_features,)
             One configuration
         Returns
         -------
-        derivative : numpy array, shape (n_parameters,)
+        derivative : numpy array, shape (m_parameters,)
         """
         pass
     
     def _derivativenorm(self): 
-        """Compute the derivative of the norm
+        """Compute the derivatives of the norm
         Returns
         -------
-        derivative : numpy array, shape (n_parameters,)
+        derivative : numpy array, shape (m_parameters,)
         """
         pass
     
     def _logderivative(self, x):
-        """Compute the logderivative of P(x)
+        """Compute the logderivatives of P(x)
         Parameters
         ----------
         x : numpy array, shape (n_features,)
             One configuration
         Returns
         -------
-        derivative : numpy array, shape (n_parameters,)
+        derivative : numpy array, shape (m_parameters,)
         """
         derivative=self._derivative(x)/self._probability(x)
         return derivative
 
     def _logderivativenorm(self):
-        """Compute the logderivative of the norm
+        """Compute the logderivatives of the norm
         Returns
         -------
-        derivative : numpy array, shape (n_parameters,)
+        derivative : numpy array, shape (m_parameters,)
         """
         derivative=self._derivativenorm()/self.norm
         return derivative
@@ -133,14 +132,14 @@ class MPS():
         self.norm = self._computenorm()
 
     def _likelihood_derivative(self, v):
-        """Compute derivative of log-likelihood of configurations in v
+        """Compute derivatives of log-likelihood of configurations in v
         Parameters
         ----------
         v : numpy array, shape (n_samples,n_features)
             Configurations
         Returns
         -------
-        update_w : numpy array, shape (n_parameters,)
+        update_w : numpy array, shape (m_parameters,)
             array of derivatives of the log-likelihood
         """
         update_w=np.zeros(self.m_parameters)
@@ -171,17 +170,21 @@ class MPS():
         return -loglikelihood/v.shape[0]
 
     def distance(self, X, w=None):
-        """Compute distance (here KL-divergence) between tensor X and MPS
+        """Compute distance (here KL-divergence) between tensor X and tensor network
         Parameters
         ----------
         X : array-like, shape (d, d, d, d,...) (dimension d^n_features)
             Tensor to fit
-        w : parameters of MPS
+        w : parameters of tensor network (optional)
+        Returns
+        -------
+        distance : float
+            KL-divergence between tensor X and the tensor network
         """
         distance=0
         epsilon=10**(-10)
         if w is not None:
-            self.w=self.padding_function(w)
+            self.w=self._padding_function(w)
         self.norm=self._computenorm()
         for i in itertools.product(np.arange(0,self.d), repeat = self.n_features):
             var=np.array(i)
@@ -193,18 +196,38 @@ class MPS():
                 distance+=a*np.log(a)-a*np.log(b)
         return distance
 
-    def function_real_to_complex(self, function, X, w=None):
+    def _function_real_to_complex(self, function, X, w=None):
+        """Transforming a function of real inputs into a function of complex inputs,
+        and returning the result viewed as a real array.
+        """
         derivative=function(X,w.view(self.w.dtype))
         return derivative.view(np.float64)   
 
-    def padding_function(self, w):
+    def _padding_function(self, w):
+        """Reshaping function to add to the input parameters the unused parameters
+        at the boundary conditions.
+        Parameters
+        ----------
+        w : numpy array, shape (m_parameters2,)
+        Returns
+        -------
+        w : numpy array, shape (m_parameters,)
+        """
         new_w=np.zeros((self.n_features,self.d,self.D,self.D),dtype=w.dtype)
         new_w[0,:,0,:]=w[0:self.D*self.d].reshape(self.d,self.D)
         new_w[1:self.n_features-1,:,:,:]=w[self.D*self.d*2:].reshape((self.n_features-2,self.d,self.D,self.D))
         new_w[self.n_features-1,:,:,0]=w[self.D*self.d:self.D*self.d*2].reshape(self.d,self.D)
         return new_w.reshape(self.m_parameters)
 
-    def unpadding_function(self, w):
+    def _unpadding_function(self, w):
+        """Reshaping function to remove the unused parameters of the boundary conditions.
+        Parameters
+        ----------
+        w : numpy array, shape (m_parameters,)
+        Returns
+        -------
+        w : numpy array, shape (m_parameters2,)
+        """
         w=w.reshape((self.n_features,self.d,self.D,self.D))
         new_w=np.zeros(self.m_parameters2,dtype=w.dtype)
         new_w[0:self.D*self.d]=w[0,:,0,:].reshape(self.d*self.D)
@@ -219,11 +242,15 @@ class MPS():
         X : array-like, shape (d, d, d, d,...) (dimension d^n_features)
             Tensor to fit
         w : parameters of MPS
+        Returns
+        -------
+        derivative : numpy array, shape (m_parameters2,)
+            array of derivatives of the distance function (KL divergence)
         """
         derivative=np.zeros(self.m_parameters,dtype=w.dtype)
         
         if w is not None:
-            self.w=self.padding_function(w)
+            self.w=self._padding_function(w)
             
         self.norm=self._computenorm()
         Zlogderivative=self._logderivativenorm()
@@ -231,13 +258,13 @@ class MPS():
             var=np.array(i)
             a=X[tuple(var)]
             derivative-=a*(self._logderivative(var)-Zlogderivative)
-        return self.unpadding_function(derivative)
+        return self._unpadding_function(derivative)
         
     def _weightinitialization(self,rng):
         """Initialize weights w randomly
         Parameters
         ----------
-        rng : random number generation
+        rng : random number generator
         """
         self.w = np.asarray(rng.normal(0, 1, self.m_parameters))
 
@@ -245,7 +272,7 @@ class MPS():
         """Initialize weights w randomly
         Parameters
         ----------
-        rng : random number generation
+        rng : random number generator
         """
         self.m_parameters2=(self.n_features-2)*self.d*self.D*self.D+2*self.D*self.d
         return np.asarray(rng.rand(self.m_parameters2))
@@ -281,18 +308,18 @@ class MPS():
         ----------
         X : {numpy array, integer matrix} shape (n_samples, n_features)
             Training data.
-        w_init : {numpy array, float or complex} shape (n_parameters,) (optional)
+        w_init : {numpy array, float or complex} shape (m_parameters,) (optional)
             Initial value of the parameters
         Returns
         -------
-        self : MPS
+        self : TN
             The fitted model.
         """
 
 #       Some initial checks of the data, initialize random number generator
         X = check_array(X, dtype=np.int64)
         rng = check_random_state(self.random_state)
-#        print(X.shape)
+
 #       Initialize parameters of MPS
         self.n_samples = X.shape[0]
         self.n_features = X.shape[1]
@@ -332,19 +359,21 @@ class MPS():
         """Fit the model to the tensor X, with parameters initialized at w_init
         Parameters
         ----------
-        X : {numpy array, integer matrix} shape (d, d, d, d,...) (dimension d^n_features)
-            Training data.
-        w_init : {numpy array, float or complex} shape (n_parameters,) (optional)
+        X : {numpy array, non-negative tensor} shape (d, d, d, d,...) (dimension d^n_features)
+            Tensor to be approximated
+        w_init : {numpy array, float or complex} shape (m_parameters,) (optional)
             Initial value of the parameters
         Returns
         -------
-        self : MPS
+        self : TN
             The fitted model.
         """
 
 #       Some initial checks of the data, initialize random number generator
         rng = check_random_state(self.random_state)
-        X=X/np.sum(X) #Tensor needs to be normalized to be a probability mass function
+        if np.abs(np.sum(X)-1)>10**(-15):
+            print("Input tensor has been normalized")
+            X=X/np.sum(X) #Tensor needs to be normalized to be a probability mass function
         
 #       Initialize parameters of MPS
         self.d = int(X.shape[1])
@@ -362,18 +391,17 @@ class MPS():
 
         begin = time.time()
  
-        distancepartial = partial(self.function_real_to_complex,self.distance,X)
-        derivativedistancepartial = partial(self.function_real_to_complex,self._derivativedistance,X)  
+        distancepartial = partial(self._function_real_to_complex,self.distance,X)
+        derivativedistancepartial = partial(self._function_real_to_complex,self._derivativedistance,X)  
 
         initial_value=self._weightinitialization2(rng)
 
         res=minimize(fun=distancepartial,jac=derivativedistancepartial,x0=initial_value.view(np.float64),\
                      method='L-BFGS-B',options={'maxiter': self.n_iter},tol=10**(-16))
 
-
-        self.w=self.padding_function(res.x.view(self.w.dtype))
-        
+        self.w=self._padding_function(res.x.view(self.w.dtype))
         self.norm=self._computenorm()
+        
         end = time.time()
         print("KL divergence = %.6f, time = %.2fs" % (self.distance(X),end - begin))
         return self

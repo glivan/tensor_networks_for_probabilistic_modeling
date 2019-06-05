@@ -1,36 +1,30 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-import os.path
 import sys
 import pickle
 import time
 import pomegranate
 
 def init(datasetload_init='lymphography',
-         bond_dimension_init='2',n_iter_init='10',save_init=False):
+         bond_dimension_init='2',n_iter_init='100'):
     """Initialize parameters :
         ----------
         datasetload : str, path of dataset
-        bond_dimension : int, bond dimension of MPS (number of hidden states)
+        bond_dimension : int, number of hidden states
         n_iter : int, Number of iterations over the training dataset to perform
     """
     global datasetload
     global bond_dimension
     global n_iter
-    global save
     
     datasetload=str(datasetload_init)
     bond_dimension=int(bond_dimension_init)
     n_iter=int(n_iter_init)
-    save=bool(save_init)
         
 def run():
     # Load dataset
-    if os.path.isdir('/ptmp/mpq/iglasser/unsupervised'):
-        path='/ptmp/mpq/iglasser/unsupervised/'
-    else:
-        path='datasets/'
+    path='datasets/'
     with open(path+datasetload, 'rb') as f:
         a=pickle.load(f)
     X=a[0]
@@ -75,12 +69,6 @@ def run():
     
     print("Negative log likelihood = %.3f" % (accuracy))
     print("Time elapsed = %.2fs" %(time_elapsed))
-
-    if save:
-        name='mpsresult'+'_'+str(datasetload)+'_'+'hmm'+'_'+\
-            str(bond_dimension)+'_'+str(n_iter)+'_'+str(accuracy)
-        with open(path+name, 'wb') as f:
-            pickle.dump([datasetload, bond_dimension, n_iter, accuracy], f)
 
 if __name__ == '__main__':
     # Main program : initialize with options from command line and run

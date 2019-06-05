@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from .MPSClass import MPS
+from .MPSClass import TN
 import numpy as np
 from sklearn.externals.six.moves import xrange
 
 
-class RealLPS(MPS):
+class RealLPS(TN):
     """Locally purified states (LPS) with real elements
     Parameters
     ----------
@@ -29,7 +29,7 @@ class RealLPS(MPS):
     ----------
     Attributes
     ----------
-    w : numpy array, shape (n_parameters)
+    w : numpy array, shape (m_parameters)
         Parameters of the tensor network
     norm : float
         normalization constant for the probability distribution
@@ -107,7 +107,7 @@ class RealLPS(MPS):
             One configuration
         Returns
         -------
-        derivative : numpy array, shape (n_parameters,)
+        derivative : numpy array, shape (m_parameters,)
         """
         w2=np.reshape(self.w,(self.n_features,self.d,self.D,self.D,self.mu))
         derivative=np.zeros((self.n_features,self.d,self.D,self.D,self.mu),dtype=np.float64)
@@ -158,7 +158,7 @@ class RealLPS(MPS):
         """Compute the derivative of the norm
         Returns
         -------
-        derivative : numpy array, shape (n_parameters,)
+        derivative : numpy array, shape (m_parameters,)
         """ 
         
         w2=np.reshape(self.w,(self.n_features,self.d,self.D,self.D,self.mu))
@@ -221,14 +221,31 @@ class RealLPS(MPS):
         self.m_parameters2 = (self.n_features-2)*self.d*self.D*self.D*self.mu+self.d*self.D*self.mu*2
         return np.asarray(rng.rand(self.m_parameters2))
         
-    def padding_function(self, w):
+    def _padding_function(self, w):
+        """Reshaping function to add to the input parameters the unused parameters
+        at the boundary conditions.
+        Parameters
+        ----------
+        w : numpy array, shape (m_parameters2,)
+        Returns
+        -------
+        w : numpy array, shape (m_parameters,)
+        """
         new_w=np.zeros((self.n_features,self.d,self.D,self.D,self.mu),dtype=w.dtype)
         new_w[0,:,0,:,:]=w[0:self.D*self.d*self.mu].reshape(self.d,self.D,self.mu)
         new_w[1:self.n_features-1,:,:,:,:]=w[self.D*self.d*self.mu*2:].reshape((self.n_features-2,self.d,self.D,self.D,self.mu))
         new_w[self.n_features-1,:,:,0,:]=w[self.D*self.d*self.mu:self.D*self.d*self.mu*2].reshape(self.d,self.D,self.mu)
         return new_w.reshape(self.m_parameters)
 
-    def unpadding_function(self, w):
+    def _unpadding_function(self, w):
+        """Reshaping function to remove the unused parameters of the boundary conditions.
+        Parameters
+        ----------
+        w : numpy array, shape (m_parameters,)
+        Returns
+        -------
+        w : numpy array, shape (m_parameters2,)
+        """
         w=w.reshape((self.n_features,self.d,self.D,self.D,self.mu))
         new_w=np.zeros(self.m_parameters2,dtype=w.dtype)
         new_w[0:self.D*self.d*self.mu]=w[0,:,0,:,:].reshape(self.d*self.D*self.mu)
@@ -244,7 +261,7 @@ class RealLPS(MPS):
             Configurations
         Returns
         -------
-        update_w : numpy array, shape (n_parameters,)
+        update_w : numpy array, shape (m_parameters,)
             array of derivatives of the log-likelihood
         """
         update_w=np.zeros(self.m_parameters,dtype=np.float64)
