@@ -40,7 +40,7 @@ Input parameters of a tensor network (all parameters are optional):
 - n_iter : int [default: 10], number of epochs over the training dataset to perform, or number of iterations of the optimization for approximating a given tensor.
 - random_state : int or numpy.RandomState [default: None], a random number generator instance to define the state of the random permutations generator. If an integer is given, it fixes the seed. Defaults to the global numpy random number generator.
 - verbose : int [default: 0], the verbosity level. Zero means silent mode.
-- mu : int [default: 2], only for real and complex LPS : the dimension of the purification leg.
+- mu : int [default: 2], only for real and complex LPS : the dimension of the purification index.
 
 Experiments in the paper used the following parameters:
 - batch size was set to 20
