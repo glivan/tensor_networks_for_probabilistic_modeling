@@ -45,7 +45,7 @@ Input parameters of a tensor network (all parameters are optional):
 Experiments in the paper used the following parameters:
 - batch size was set to 20
 - learning_rate was chosen using a grid search on powers of 10 going from 10<sup>-5</sup> to 10<sup>5</sup>.
-- n_iter was set to a maximum of 20000
+- n_iter was set to a maximum of 20000  
 Each data point indicated in the paper is the lowest negative log-likelihood obtained from 10 trials with different initial tensors.
 
 For approximating a given non-negative tensor, the optimization is performed by a limited-memory BFGS algorithm. Batch size and learning rate parameters are not used.
