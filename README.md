@@ -1,5 +1,5 @@
 # Expressive power of tensor-network factorizations for probabilistic modeling
-This is the code accompanying the paper "Expressive power of tensor-network factorizations for probabilistic modeling with applications from hidden Markov models to quantum machine learning" [1] and allowing to reproduce its numerical results. If you use this code or results please cite [1].
+This is the code accompanying the paper "Expressive power of tensor-network factorizations for probabilistic modeling with applications from hidden Markov models to quantum machine learning" and allowing to reproduce its numerical results. If you use this code or results please cite [1].
 
 ## Prerequisite
 A working python 2.7, 3.4 or more recent installation with the following python libraries (all included in Anaconda) :
