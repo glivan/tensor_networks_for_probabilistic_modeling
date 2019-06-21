@@ -59,7 +59,7 @@ Input parameters (all parameters are optional):
 - bond_dimension : int [default: 2], bond dimension/rank (here number of hidden states per variable)
 - n_iter : int [default: 100], number of epochs over the training dataset to perform
 
-[1] Glasser, I., Sweke, R., Pancotti, N., Eisert, J., Cirac, J. I. (2019) Expressive power of tensor-network factorizations for probabilistic modeling with applications from hidden Markov models to quantum machine learning. arxiv:1906.xxxxx
+[1] Glasser, I., Sweke, R., Pancotti, N., Eisert, J., Cirac, J. I. (2019) Expressive power of tensor-network factorizations for probabilistic modeling with applications from hidden Markov models to quantum machine learning. arxiv:1906.xxxxx  
 [2] Schreiber, J. (2018). Pomegranate: fast and flexible probabilistic modeling in python. Journal of Machine Learning Research, 18(164), 1-6.  
 [3] Müller, N. S., M. Studer, G. Ritschard (2007). Classification de parcours de vie à l'aide de l'optimal matching. In XIVe Rencontre de la Société francophone de classification (SFC 2007), Paris, 5 - 7 septembre 2007, pp. 157–160.  
 [4] Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.  
