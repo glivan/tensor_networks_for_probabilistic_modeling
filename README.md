@@ -1,12 +1,12 @@
 # Expressive power of tensor-network factorizations for probabilistic modeling
-This is the code accompanying the paper "Expressive power of tensor-network factorizations for probabilistic modeling with applications from hidden Markov models to quantum machine learning" and allowing to reproduce its numerical results.
+This is the code accompanying the paper "Expressive power of tensor-network factorizations for probabilistic modeling with applications from hidden Markov models to quantum machine learning" [1] and allowing to reproduce its numerical results. If you use this code or results please cite [1].
 
 ## Prerequisite
 A working python 2.7, 3.4 or more recent installation with the following python libraries (all included in Anaconda) :
 ```
 numpy, scikit-learn, os, sys, pickle, time
 ```
-For training a hidden Markov model the python library [pomegranate](https://github.com/jmschrei/pomegranate) [1] and its dependencies must also be installed. This is not necessary for running the tensor-network algorithms.
+For training a hidden Markov model the python library [pomegranate](https://github.com/jmschrei/pomegranate) [2] and its dependencies must also be installed. This is not necessary for running the tensor-network algorithms.
 
 ## Overview of the code
 ### Datasets
@@ -15,12 +15,12 @@ Preprocessing transformed the categorical data into a numpy array of integers. E
 
 Included datasets :  
 From the R package TraMineR :  
-- Family life states from the Swiss Household Panel biographical survey : `biofam` [2]
+- Family life states from the Swiss Household Panel biographical survey : `biofam` [3]
 
-From the UCI Machine Learning Repository [3]  
+From the UCI Machine Learning Repository [4]  
 - SPECT Heart Data Set : `spect`
-- Lymphography Data Set : `lymphography` [4]
-- Primary Tumor Data Set : `tumor` [5]
+- Lymphography Data Set : `lymphography` [5]
+- Primary Tumor Data Set : `tumor` [6]
 - Congressional Voting Records Data Set : `votes`
 - Solar Flare Data Set : `flare`
 
@@ -59,8 +59,9 @@ Input parameters (all parameters are optional):
 - bond_dimension : int [default: 2], bond dimension/rank (here number of hidden states per variable)
 - n_iter : int [default: 100], number of epochs over the training dataset to perform
 
-[1] Schreiber, J. (2018). Pomegranate: fast and flexible probabilistic modeling in python. Journal of Machine Learning Research, 18(164), 1-6.  
-[2] Müller, N. S., M. Studer, G. Ritschard (2007). Classification de parcours de vie à l'aide de l'optimal matching. In XIVe Rencontre de la Société francophone de classification (SFC 2007), Paris, 5 - 7 septembre 2007, pp. 157–160.  
-[3] Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.  
-[4] This lymphography domain was obtained from the University Medical Centre, Institute of Oncology, Ljubljana, Yugoslavia. Thanks go to M. Zwitter and M. Soklic for providing the data.  
-[5] This primary tumor domain was obtained from the University Medical Centre, Institute of Oncology, Ljubljana, Yugoslavia. Thanks go to M. Zwitter and M. Soklic for providing the data.  
+[1] Glasser, I., Sweke, R., Pancotti, N., Eisert, J., Cirac, J. I. (2019) Expressive power of tensor-network factorizations for probabilistic modeling with applications from hidden Markov models to quantum machine learning. arxiv:1906.xxxxx
+[2] Schreiber, J. (2018). Pomegranate: fast and flexible probabilistic modeling in python. Journal of Machine Learning Research, 18(164), 1-6.  
+[3] Müller, N. S., M. Studer, G. Ritschard (2007). Classification de parcours de vie à l'aide de l'optimal matching. In XIVe Rencontre de la Société francophone de classification (SFC 2007), Paris, 5 - 7 septembre 2007, pp. 157–160.  
+[4] Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.  
+[5] This lymphography domain was obtained from the University Medical Centre, Institute of Oncology, Ljubljana, Yugoslavia. Thanks go to M. Zwitter and M. Soklic for providing the data.  
+[6] This primary tumor domain was obtained from the University Medical Centre, Institute of Oncology, Ljubljana, Yugoslavia. Thanks go to M. Zwitter and M. Soklic for providing the data.  
