@@ -48,7 +48,7 @@ Experiments in the paper used the following parameters:
 - n_iter was set to a maximum of 20000  
 Each data point indicated in the paper is the lowest negative log-likelihood obtained from 10 trials with different initial tensors.
 
-For approximating a given non-negative tensor, the optimization is performed by a limited-memory BFGS algorithm. Batch size and learning rate parameters are not used.
+For approximating a given non-negative tensor, the optimization is performed by a limited-memory BFGS algorithm. Batch size and learning rate parameters are not used, and experiments in the paper used a maximum number of iterations n_iter of 10000.
 
 We also include code to train a hidden Markov model corresponding to an MPS with positive tensors. The training is performed using the Baum-Welch algorithm by running
 ```
